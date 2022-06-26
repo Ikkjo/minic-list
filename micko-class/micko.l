@@ -15,6 +15,7 @@
 "if"                 { return _IF; }
 "else"               { return _ELSE; }
 "return"             { return _RETURN; }
+"class"              { return _CLASS; }
 
 "("                  { return _LPAREN; }
 ")"                  { return _RPAREN; }
@@ -22,6 +23,7 @@
 "}"                  { return _RBRACKET; }
 ";"                  { return _SEMICOLON; }
 "="                  { return _ASSIGN; }
+"."                  { return _DOT; }
 
 "+"                  { yylval.i = ADD; return _AROP; }
 "-"                  { yylval.i = SUB; return _AROP; }
@@ -42,5 +44,11 @@
                        return _UINT_NUMBER;}
 
 \/\/.*               { /* skip */ }
+
+"/\\*[^*]*\\*+(?:[^/*][^*]*\\*+)*/" { /* multiline comment skip */ }
+
 .                    { printf("line %d: LEXICAL ERROR on char %c\n", yylineno, *yytext);}
+
+
+
 %%
