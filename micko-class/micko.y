@@ -18,6 +18,9 @@
   int var_num = 0;
   int fun_idx = -1;
   int fcall_idx = -1;
+  int cls_idx = -1;
+  int cls_init_idx = -1;
+  int cls_fcall_idx = -1;
   int lab_num = -1;
   FILE *output;
 %}
@@ -42,6 +45,8 @@
 %token _SEMICOLON
 %token <i> _AROP
 %token <i> _RELOP
+%token _CLASS
+%token _DOT
 
 %type <i> num_exp exp literal
 %type <i> function_call argument rel_exp if_part
@@ -52,15 +57,46 @@
 %%
 
 program
-  : function_list
+  : class_list function_list
       {  
         if(lookup_symbol("main", FUN) == NO_INDEX)
           err("undefined reference to 'main'");
       }
   ;
 
-function_list
+class_list
+  : /* empty */
+  | class_list class
+  ;
+
+class
+  : _CLASS _ID
+    {
+      cls_idx = lookup_symbol($2, CLS);
+      if(cls_idx == NO_INDEX)
+        cls_idx = insert_symbol($2, CLS, $2, NO_ATR, NO_ATR);
+      else
+        err("redefinition of class '%s'", $2);
+
+      printf("Adding class '%s'", $2);
+    }
+  class_body
+    {
+      printf("Added new class!");
+    }
+  ;
+
+class_body
+  : _LBRACKET variable_list class_function_list _RBRACKET
+  ;
+
+class_function_list
   : function
+  | class_function_list function
+  ;
+
+function_list
+  : /* empty */
   | function_list function
   ;
 
