@@ -14,13 +14,15 @@ Potrebni alati za buildovanje:
 ## Način pokretanja
 
 Za buildovanje je potrebno pozicionirati se u micko-class folder i pokrenuti CMake.
+```
+cd micko-class/
+make
+```
 
-`cd micko-class/`
 
-`make`
 
 Nakon ovoga se u folderu micko-class pravi kompajler u izvrsnoj formi pod nazivom micko-class.
 
-Kako bi se kompajlirao micko-class source kod treba se izvršiti sledeća komanda.
+Kako bi se kompajlirao micko-class source kod (u ovom primeru fajl `my_code.mc`) treba se izvršiti sledeća komanda.
 
 `./micko-class < my_code.mc`
