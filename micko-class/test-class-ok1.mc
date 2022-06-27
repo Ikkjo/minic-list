@@ -5,14 +5,14 @@ class VratiPet {
     int a;
     int b;
 
-    VratiPet(){
+    Init(){
         a = 5;
         b = 4;
     }
 }
 
 int main() {
-  VratiPet c = VratiPet();
+  VratiPet c;
 
   return c.a;
 }

@@ -47,6 +47,8 @@
 %token <i> _RELOP
 %token _CLASS
 %token _DOT
+%token _INIT
+%token _INIT_DECL
 
 %type <i> num_exp exp literal
 %type <i> function_call argument rel_exp if_part
@@ -72,11 +74,11 @@ class_list
 class
   : _CLASS _ID
     {
-      cls_idx = lookup_symbol($2, CLS);
-      if(cls_idx == NO_INDEX)
-        cls_idx = insert_symbol($2, CLS, $2, NO_ATR, NO_ATR);
-      else
-        err("redefinition of class '%s'", $2);
+      // cls_idx = lookup_symbol($2, CLS);
+      // if(cls_idx == NO_INDEX)
+      //   cls_idx = insert_symbol($2, CLS, $2, NO_ATR, NO_ATR);
+      // else
+      //   err("redefinition of class '%s'", $2);
 
       printf("Adding class '%s'", $2);
     }
@@ -87,12 +89,11 @@ class
   ;
 
 class_body
-  : _LBRACKET variable_list class_function_list _RBRACKET
+  : _LBRACKET variable_list class_init_function function_list _RBRACKET
   ;
 
-class_function_list
-  : function
-  | class_function_list function
+class_init_function
+  : _INIT_DECL _LPAREN _RPAREN body
   ;
 
 function_list

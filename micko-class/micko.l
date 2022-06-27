@@ -16,6 +16,8 @@
 "else"               { return _ELSE; }
 "return"             { return _RETURN; }
 "class"              { return _CLASS; }
+"init"               { return _INIT; }
+"Init"               { return _INIT_DECL; } 
 
 "("                  { return _LPAREN; }
 ")"                  { return _RPAREN; }
@@ -44,8 +46,6 @@
                        return _UINT_NUMBER;}
 
 \/\/.*               { /* skip */ }
-
-"/\\*[^*]*\\*+(?:[^/*][^*]*\\*+)*/" { /* multiline comment skip */ }
 
 .                    { printf("line %d: LEXICAL ERROR on char %c\n", yylineno, *yytext);}
 
